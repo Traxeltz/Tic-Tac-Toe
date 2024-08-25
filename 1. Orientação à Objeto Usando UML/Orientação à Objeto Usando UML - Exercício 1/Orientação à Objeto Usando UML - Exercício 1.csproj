@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Orientação_à_Objeto_Usando_UML___Exercício_1</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="CadastroBancario.cs" />
+    <Compile Remove="Heroi.cs" />
+    <Compile Remove="HeroiAlianca.cs" />
+    <Compile Remove="HeroiHorda.cs" />
+    <Compile Remove="UoU.cs" />
+  </ItemGroup>
+
+</Project>
