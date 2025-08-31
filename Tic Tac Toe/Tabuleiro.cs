@@ -3,16 +3,19 @@
 namespace JogoDaVelha
 {
     // Programa de Operações do Tabuleiro
-    public class Tabuleiro
+    public abstract class Player
     {
         // Leitura Interna do Tabuleiro
-        private readonly char[,] quadrados;
+        protected static char[,] quadrados = new char[3, 3];
+        protected string Nome { get; }
+        protected char Simbolo { get; }
+        public int Pontuacao = 0;
 
         // Construção do Tabuleiro
-        public Tabuleiro()
+        public Player(string nome, char simbolo)
         {
-            quadrados = new char[3, 3];
-            InicializarTabuleiro();
+            Nome = nome;
+            Simbolo = simbolo;
         }
         
         // Inicialização do Tabuleiro com Caracteres Vazios
@@ -21,15 +24,15 @@ namespace JogoDaVelha
             for (int i = 0; i < quadrados.GetLength(0); i++)
             {
                 for (int j = 0; j < quadrados.GetLength(1); j++)
-                {
                     quadrados[i, j] = ' ';
-                }
             }
         }
 
         // Exibição do Tabuleiro na Tela
         public void ExibirTabuleiro()
         {
+            Console.Clear();
+            Console.ResetColor();
             for (int i = 0; i < quadrados.GetLength(0); i++)
             {
                 Console.WriteLine();
@@ -37,63 +40,49 @@ namespace JogoDaVelha
                 {
                     Console.Write(" " + quadrados[i, j] + " ");
                     if (j < quadrados.GetLength(1) - 1)
-                    {
                         Console.Write('|');
-                    }
                 }
                 Console.WriteLine();
                 if (i < quadrados.GetLength(0) - 1)
-                {
                     Console.Write("-----------");
-                }
             }
             Console.WriteLine();
         }
-        
-        // Verifica se uma casa do tabuleiro está preenchida
-        public bool QuadradoPreenchido(int linha, int coluna)
-        {
-            return quadrados[linha - 1, coluna - 1] != ' ';
-        }
 
         // Realização de uma jogada por um jogador
-        public void FazerJogada(int linha, int coluna, char simbolo)
+        public virtual void FazerJogada(int linha = 0, int coluna = 0)
         {
-            quadrados[linha - 1, coluna - 1] = simbolo;
+            Console.WriteLine($"{Nome}, insira as coordenadas da sua jogada!");
+            do
+            {
+                Console.Write("Linha: ");
+                linha = int.Parse(Console.ReadLine().Trim());
+                Console.Write("Coluna: ");
+                coluna = int.Parse(Console.ReadLine().Trim());
+                if (quadrados[linha - 1, coluna - 1] != ' ') // Verificar se a casa está vazia
+                    Console.WriteLine("\nEsta casa já foi preenchida. Insira uma coordenada para uma casa vazia!\n");
+            }
+            while (quadrados[linha - 1, coluna - 1] != ' ');
+            quadrados[linha - 1, coluna - 1] = Simbolo; // Preenche o tabuleiro com o símbolo do jogador
         }
 
         // Verifica se algum jogador venceu o jogo
-        public bool VerificarVitoria(char simbolo)
+        public virtual bool VerificarVitoria()
         {
-            // Verificação de Linhas
+            // Verificação de Linhas e Colunas
             for (int i = 0; i < quadrados.GetLength(0); i++)
             {
-                if (quadrados[i, 0] == simbolo && quadrados[i, 1] == simbolo && quadrados[i, 2] == simbolo)
-                {
+                if (quadrados[i, 0] == Simbolo && quadrados[i, 1] == Simbolo && quadrados[i, 2] == Simbolo)
                     return true; // Linha completa
-                }
-            }
-
-            // Verificação de Colunas
-            for (int i = 0; i < quadrados.GetLength(1); i++)
-            {
-                if (quadrados[0, i] == simbolo && quadrados[1, i] == simbolo && quadrados[2, i] == simbolo)
-                {
+                if (quadrados[0, i] == Simbolo && quadrados[1, i] == Simbolo && quadrados[2, i] == Simbolo)
                     return true; // Coluna completa
-                }
             }
 
-            // Verificação da Diagonal Principal
-            if (quadrados[0, 0] == simbolo && quadrados[1, 1] == simbolo && quadrados[2, 2] == simbolo)
-            {
+            // Verificação das Diagonais
+            if (quadrados[0, 0] == Simbolo && quadrados[1, 1] == Simbolo && quadrados[2, 2] == Simbolo)
                 return true; // Diagonal principal completa
-            }
-
-            // Verificação da Diagonal Secundária
-            if (quadrados[0, 2] == simbolo && quadrados[1, 1] == simbolo && quadrados[2, 0] == simbolo)
-            {
+            if (quadrados[0, 2] == Simbolo && quadrados[1, 1] == Simbolo && quadrados[2, 0] == Simbolo)
                 return true; // Diagonal secundária completa
-            }
 
             return false; // Ninguém venceu ainda
         }
@@ -101,22 +90,18 @@ namespace JogoDaVelha
         // Verifica se não há mais possibilidade de vencer
         public bool VerificarVelha()
         {
-            int quadradosVazios = 0;
             foreach (char quadrado in quadrados) // Verificar cada casa do tabuleiro
             {
                 if (quadrado == ' ') // Se for vazio
-                {
-                    quadradosVazios++;
-                }
+                    return false; // Ainda há como jogar
             }
-            if (quadradosVazios == 0) // Caso todas as casas estejam preenchidas
-            {
-                return true; // Deu velha
-            }
-            return false; // Ainda há como jogar
+
+            Console.WriteLine("Deu velha!");
+            Console.WriteLine("Ninguém venceu!");
+            return true; // Deu velha
         }
 
         // Destruição do Tabuleiro ao Final
-        ~Tabuleiro() { }
+        ~Player() { }
     }
 }
