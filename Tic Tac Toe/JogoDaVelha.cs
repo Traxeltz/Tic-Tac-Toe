@@ -45,6 +45,7 @@ namespace JogoDaVelha
                     while (!jogoFinalizado) // Início do loop de rodadas do jogo
                     {
                         Player.InicializarTabuleiro(); // Inicializa o tabuleiro para uma nova partida
+                        Player.ExibirTabuleiro(); // Exibe o tabuleiro na tela
 
                         // Início do Loop do Jogo
                         while (true)
@@ -52,17 +53,13 @@ namespace JogoDaVelha
                             // Caso o Jogador 1 tenha escolhido o X
                             if (simbolo1 == 'X')
                             {
-                                Player.ExibirTabuleiro();
-
                                 // Jogador 1 irá jogar
                                 player1.FazerJogada(); // Fazer a jogada se for válida
 
                                 // Mostrar tabuleiro na situação atual
                                 Player.ExibirTabuleiro();
 
-                                if (player1.VerificarVitoria()) // Verificar se uma condição de vitória foi atingida
-                                    break;
-                                if (Player.VerificarVelha()) // Verificar se não é mais possível vencer
+                                if (player1.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
                                     break;
 
                                 // Jogador 2 irá jogar
@@ -71,26 +68,20 @@ namespace JogoDaVelha
                                 // Mostrar tabuleiro na situação atual
                                 Player.ExibirTabuleiro();
 
-                                if (player2.VerificarVitoria()) // Verificar se uma condição de vitória foi atingida
-                                    break;
-                                if (Player.VerificarVelha()) // Verificar se não é mais possível vencer
+                                if (player2.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
                                     break;
                             }
 
                             // Caso o Jogador 2 tenha escolhido o X
                             if (simbolo2 == 'X')
                             {
-                                Player.ExibirTabuleiro();
-
                                 // Jogador 2 irá jogar
                                 player2.FazerJogada(); // Fazer a jogada se for válida
 
                                 // Mostrar tabuleiro na situação atual
                                 Player.ExibirTabuleiro();
 
-                                if (player2.VerificarVitoria()) // Verificar se uma condição de vitória foi atingida
-                                    break;
-                                if (Player.VerificarVelha()) // Verificar se não é mais possível vencer
+                                if (player2.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
                                     break;
 
                                 // Jogador 1 irá jogar
@@ -99,13 +90,12 @@ namespace JogoDaVelha
                                 // Mostrar tabuleiro na situação atual
                                 Player.ExibirTabuleiro();
 
-                                if (player1.VerificarVitoria()) // Verificar se uma condição de vitória foi atingida
-                                    break;
-                                if (Player.VerificarVelha()) // Verificar se não é mais possível vencer
+                                if (player1.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
                                     break;
                             }
                         }
 
+                        // Exibição da pontuação atual
                         Console.WriteLine($"\n\t{player1.Pontuacao} - {player2.Pontuacao}");
 
                         char Opcao = ' ';
