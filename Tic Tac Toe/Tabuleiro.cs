@@ -6,20 +6,21 @@ namespace JogoDaVelha
     public abstract class Player
     {
         // Leitura Interna do Tabuleiro
-        protected static char[,] quadrados = new char[3, 3];
+        private static readonly char[,] quadrados = new char[3, 3];
         protected string Nome { get; }
         protected char Simbolo { get; }
-        public int Pontuacao = 0;
+        public int Pontuacao { get; set; }
 
         // Construção do Tabuleiro
         public Player(string nome, char simbolo)
         {
             Nome = nome;
             Simbolo = simbolo;
+            Pontuacao = 0;
         }
         
         // Inicialização do Tabuleiro com Caracteres Vazios
-        public void InicializarTabuleiro()
+        public static void InicializarTabuleiro()
         {
             for (int i = 0; i < quadrados.GetLength(0); i++)
             {
@@ -29,7 +30,7 @@ namespace JogoDaVelha
         }
 
         // Exibição do Tabuleiro na Tela
-        public void ExibirTabuleiro()
+        public static void ExibirTabuleiro()
         {
             Console.Clear();
             Console.ResetColor();
@@ -88,7 +89,7 @@ namespace JogoDaVelha
         }
 
         // Verifica se não há mais possibilidade de vencer
-        public bool VerificarVelha()
+        public static bool VerificarVelha()
         {
             foreach (char quadrado in quadrados) // Verificar cada casa do tabuleiro
             {
@@ -101,7 +102,11 @@ namespace JogoDaVelha
             return true; // Deu velha
         }
 
-        // Destruição do Tabuleiro ao Final
-        ~Player() { }
+        #if DEBUG
+        ~Player()
+        {
+            Console.WriteLine($"\nPlayer {Nome} destruído.");
+        }
+        #endif
     }
 }
