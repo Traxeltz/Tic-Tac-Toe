@@ -128,25 +128,31 @@ namespace JogoDaVelha
                 {
                     Console.ResetColor();
                     Console.WriteLine($"\n{Erro.Message}");
-                    Console.WriteLine("Pressione qualquer tecla para reiniciar o programa.");
-                    Console.ReadKey();
-                    GC.Collect();
                 }
                 catch (FormatException)
                 {
                     Console.ResetColor();
                     Console.WriteLine("\nO valor inserido não é apropriado. Por favor, insira valores apropriados.");
-                    Console.WriteLine("Pressione qualquer tecla para reiniciar o programa.");
-                    Console.ReadKey();
-                    GC.Collect();
                 }
                 catch (IndexOutOfRangeException)
                 {
                     Console.ResetColor();
                     Console.WriteLine("\nEste valor para a coordenada não existe. Por favor, insira valores apropriados.");
+                }
+                catch (OverflowException)
+                {
+                    Console.ResetColor();
+                    Console.WriteLine("\nO valor inserido está fora de contexto. Por favor, insira valores apropriados.");
+                }
+                catch (Exception Erro)
+                {
+                    Console.ResetColor();
+                    Console.WriteLine($"\nOcorreu um erro inesperado: {Erro.Message}");
+                }
+                if (!entradasValidas)
+                {
                     Console.WriteLine("Pressione qualquer tecla para reiniciar o programa.");
                     Console.ReadKey();
-                    GC.Collect();
                 }
             }
 
