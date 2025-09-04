@@ -5,6 +5,33 @@ namespace JogoDaVelha
     // Programa Principal
     public class Jogo
     {
+        public static void ExecutarJogo(Player playerX, Player playerO)
+        {
+            // Início do Loop do Jogo
+            while (true)
+            {
+                // Jogador 'X' irá jogar
+                playerX.FazerJogada(); // Fazer a jogada se for válida
+
+                // Mostrar tabuleiro na situação atual
+                Player.ExibirTabuleiro();
+
+                // Verificar se uma condição de parada foi atingida
+                if (playerX.VerificarVitoria() || Player.VerificarVelha())
+                    break;
+
+                // Jogador 'O' irá jogar
+                playerO.FazerJogada(); // Fazer a jogada se for válida
+
+                // Mostrar tabuleiro na situação atual
+                Player.ExibirTabuleiro();
+
+                // Verificar se uma condição de parada foi atingida
+                if (playerO.VerificarVitoria() || Player.VerificarVelha())
+                    break;
+            }
+        }
+
         public static void Main()
         {
             // Inserção de dados para o jogo
@@ -47,53 +74,10 @@ namespace JogoDaVelha
                         Player.InicializarTabuleiro(); // Inicializa o tabuleiro para uma nova partida
                         Player.ExibirTabuleiro(); // Exibe o tabuleiro na tela
 
-                        // Início do Loop do Jogo
-                        while (true)
-                        {
-                            // Caso o Jogador 1 tenha escolhido o X
-                            if (simbolo1 == 'X')
-                            {
-                                // Jogador 1 irá jogar
-                                player1.FazerJogada(); // Fazer a jogada se for válida
-
-                                // Mostrar tabuleiro na situação atual
-                                Player.ExibirTabuleiro();
-
-                                if (player1.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
-                                    break;
-
-                                // Jogador 2 irá jogar
-                                player2.FazerJogada(); // Fazer a jogada se for válida
-
-                                // Mostrar tabuleiro na situação atual
-                                Player.ExibirTabuleiro();
-
-                                if (player2.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
-                                    break;
-                            }
-
-                            // Caso o Jogador 2 tenha escolhido o X
-                            if (simbolo2 == 'X')
-                            {
-                                // Jogador 2 irá jogar
-                                player2.FazerJogada(); // Fazer a jogada se for válida
-
-                                // Mostrar tabuleiro na situação atual
-                                Player.ExibirTabuleiro();
-
-                                if (player2.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
-                                    break;
-
-                                // Jogador 1 irá jogar
-                                player1.FazerJogada(); // Fazer a jogada se for válida
-
-                                // Mostrar tabuleiro na situação atual
-                                Player.ExibirTabuleiro();
-
-                                if (player1.VerificarVitoria() || Player.VerificarVelha()) // Verificar se uma condição de parada foi atingida
-                                    break;
-                            }
-                        }
+                        if (player1.Simbolo == 'X') // Caso o Jogador 1 tenha escolhido o X
+                            ExecutarJogo(player1, player2);
+                        else // Se não, o Jogador 2 tem o X
+                            ExecutarJogo(player2, player1);
 
                         // Exibição da pontuação atual
                         Console.WriteLine($"\n\t{player1.Pontuacao} - {player2.Pontuacao}");

@@ -8,7 +8,7 @@ namespace JogoDaVelha
         // Leitura Interna do Tabuleiro
         private static readonly char[,] quadrados = new char[3, 3];
         protected string Nome { get; }
-        protected char Simbolo { get; }
+        public char Simbolo { get; }
         public int Pontuacao { get; set; }
 
         // Construção do Tabuleiro
