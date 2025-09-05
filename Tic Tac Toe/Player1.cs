@@ -1,24 +1,24 @@
 ﻿using System;
 
-namespace JogoDaVelha
+namespace TicTacToe
 {
     public class Player1 : Player
     {
-        public Player1(string nome, char simbolo) : base(nome, simbolo) { }
+        public Player1(string name, char symbol) : base(name, symbol) { }
 
-        public override void FazerJogada(int linha, int coluna)
+        public override void MakeMove(int row, int column)
         {
             Console.ForegroundColor = ConsoleColor.Blue;
-            base.FazerJogada(linha, coluna);
+            base.MakeMove(row, column);
         }
 
-        public override bool VerificarVitoria()
+        public override bool CheckVictory()
         {
-            if (base.VerificarVitoria())
+            if (base.CheckVictory())
             {
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine($"{Nome} venceu o Jogo da Velha!");
-                Pontuacao++;
+                Console.WriteLine($"{Name} won Tic Tac Toe!");
+                Score++;
                 return true;
             }
 
